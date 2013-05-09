@@ -1,0 +1,9 @@
+-@ val word: String
+-@ val definitions: List[String]
+
+html
+  body
+    p Word : #{word}
+    p
+    - for(i <- definitions)
+      p=i

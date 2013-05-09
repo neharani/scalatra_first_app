@@ -1,10 +1,9 @@
 package com.springer.com
 
 import org.scalatra._
-import scalate.ScalateSupport
+import dispatch._
 
-
-import scala.xml.{Text, Node}
+import scala.xml.{NodeSeq, XML, Text, Node}
 
 
 class MyScalatraServlet extends Search_applicationStack {
@@ -14,12 +13,15 @@ class MyScalatraServlet extends Search_applicationStack {
     jade("/index", "title" -> "My First Jade Template")
   }
 
- 	post("/next"){
-     <html>
-       <body>
-        <p>You posted: {params("word")} </p>
-       </body>
-     </html>
+ 	post("/next") {
+    contentType="text/html"
+    val word = {params("word")}
+    val svc = dispatch.url("http://services.aonaware.com//DictService/DictService.asmx/Define?word=" + word)
+    val country = (dispatch.Http(svc OK as.String))()
+    val xml = XML.loadString(country)
+    val definitions = ((xml \\ "Definitions") \\ "Definition")
+    val result = ((definitions.foldLeft(List("")){(x:List[String],y:NodeSeq) => (y \\ "WordDefinition").text :: x})).toList
+    jade("/result", "title" -> "Word Results", "word" -> word, "definitions" -> result)
  	}
 
 }
