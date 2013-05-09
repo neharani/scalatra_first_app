@@ -1,0 +1,10 @@
+- attributes("title")
+- attributes("headline") = ""
+
+form{:action => "/next", :method => "POST"}
+    p= "Enter word:"
+    input{:type => "text", :name => "word"}
+    br
+    br
+    input{:type => "submit"}
+

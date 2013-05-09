@@ -2,8 +2,6 @@ package com.springer.com
 
 import org.scalatra.test.specs2._
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers._
 
 // For more on Specs2, see http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html
 class MyScalatraServletSpec extends ScalatraSpec {
